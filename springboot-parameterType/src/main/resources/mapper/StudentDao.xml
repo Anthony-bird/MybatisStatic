@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.dao.StudentDao">
+
+    <!--parameterType指定的是参数类型，Dao接口里面的@Param指定的是参数名
+
+    parameterType的属性值可以用mybatis定义的Java类型别名,例如integer
+
+    parameterType的属性值也可以使用Java类型的全限定名称，例如java.lang.Integer
+    (实际开发中都是使用的第二种，因为可读性更好）
+
+    参数简单时，parameterType可以省略不写，mybatis可以通过反射获取dao接口的
+    参数类型
+    -->
+    <!--定义sql语句   resultType 返回值实体类  需要和dao接口中定义的返回值类型一致-->
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.example.mapper.model.Student">
+        select id,name,age from student where id=#{stuId}
+    </select>
+
+    <!--
+    dao接口方法形参是一个简单类型(Java基本数据类型和String)
+    的参数时，mapper文件获取这个值可以使用#{任意字符}
+    -->
+    <select id="selectByEmail" resultType="com.example.mapper.model.Student">
+        select id,name,age,email,status  from student where email=#{李四}
+    </select>
+
+    <!--
+    多个简单类型的参数，
+    当使用了@Param命名后，例如@Param("myname")
+    在mapper中，使用#{命名的参数} 例如name=#{myname}
+    -->
+    <select id="selectByNameOrAge" resultType="com.example.mapper.model.Student">
+        select id,name,age,email,status  from student where name=#{myname} or age=#{myage}
+    </select>
+</mapper>
