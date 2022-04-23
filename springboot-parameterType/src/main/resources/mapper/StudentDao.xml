@@ -35,4 +35,33 @@
     <select id="selectByNameOrAge" resultType="com.example.mapper.model.Student">
         select id,name,age,email,status  from student where name=#{myname} or age=#{myage}
     </select>
+
+    <!--
+        传入一个java对象作为方法的参数，使用对象的属性作为sql中的参数
+        简单的语法 #{属性名}，mybatis调用属性名对应的getxxx方法获取对应的属性值
+        例如name=#{name} 在调用getName()后被替换为name=张三
+        -->
+    <select id="selectByObject" resultType="com.example.mapper.model.Student">
+        select id,name,age,email,status  from student where name=#{name} or age=#{age}
+    </select>
+
+    <select id="selectByQueryParam" resultType="com.example.mapper.model.Student">
+        select id,name,age,email,status  from student where name=#{param1} or age=#{param2}
+    </select>
+
+    <!--
+    为什么不建议使用map？
+    使用map传参可读性比较差，好处是容易添加值
+    使用map传递参数，获取map的值，是通过key获取的，语法#{key}
+    SQl里面的#{key}与map里面的key要完全一致
+    使用map一般需要指定parameterType="map"
+    -->
+    <select id="selectByMap" resultType="com.example.mapper.model.Student" parameterType="map">
+        select id,name,age,email,status  from student where name=#{name} or age=#{age}
+    </select>
+
+    <update id="updateStudent" parameterType="com.example.mapper.model.Student">
+        update student set email=#{email}
+        where name=#{name} and age=#{age}
+    </update>
 </mapper>
